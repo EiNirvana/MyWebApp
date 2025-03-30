@@ -1,22 +1,17 @@
 package com.iticbcn.MyWebApp.Repositories;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.iticbcn.MyWebApp.Model.Llibre;
 
-import io.micrometer.common.lang.NonNull;
+public interface RepoLlibre  extends JpaRepository<Llibre, Long>{
 
-public interface RepoLlibre  extends JpaRepository<Llibre, Object>{
-    
-    @Override
-    @NonNull
-    List<Llibre> findAll();
-    List<Llibre> findByEditorial();
+    Set<Llibre> findByTitolAndEditorial(String titol, String editorial);
 
-    Optional<Llibre> findByTitol();
+    Optional<Llibre> findByTitol(String titol);
 
 
 }

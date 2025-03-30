@@ -1,6 +1,9 @@
 package com.iticbcn.MyWebApp.Controllers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +23,7 @@ import com.iticbcn.MyWebApp.Repositories.RepoLlibre;
 public class BookController {
 
     @Autowired
-    RepoLlibre repoll = new RepoLlibre();
+    RepoLlibre repoll;
 
     @GetMapping("/")
     public String iniciar(Model model) {
@@ -50,7 +53,7 @@ public class BookController {
     @GetMapping("/consulta") 
     public String consulta(@ModelAttribute("users") Usuaris users,Model model) {
 
-        ArrayList<Llibre> llibres = repoll.getAllLlibres();
+        List<Llibre> llibres = repoll.findAll();
 
         model.addAttribute("llibres", llibres);
         
@@ -67,7 +70,6 @@ public class BookController {
     public String inputCerca(@ModelAttribute("users") Usuaris users, Model model) {
 
         Llibre llibre = new Llibre();
-        llibre.setIdLlibre(0);
         model.addAttribute("llibreErr", true);
         model.addAttribute("message", "");
         model.addAttribute("llibre", llibre);
@@ -82,8 +84,9 @@ public class BookController {
                           @RequestParam(name = "titol") String titol,  
                           @RequestParam(name = "autor") String autor,
                           @RequestParam(name = "editorial") String editorial,  
-                          @RequestParam(name = "datapublicacio") String datapublicacio,
+                          @RequestParam(name = "datapublicacio") LocalDate datapublicacio,
                           @RequestParam(name = "tematica") String tematica,
+                          @RequestParam(name = "ISBN") String ISBN,
                           Model model) {
 
         String message = "";
@@ -97,9 +100,9 @@ public class BookController {
             return "inserir";
         } else {
             int idL = Integer.parseInt(idLlibre);
-            Llibre llibre = new Llibre(idL,titol,autor,editorial,datapublicacio,tematica);
-            repoll.InsertaLlibre(llibre);
-            ArrayList<Llibre> llibres = repoll.getAllLlibres();
+            Llibre llibre = new Llibre(idL,titol,autor,editorial,datapublicacio,tematica, ISBN);
+            repoll.save(llibre);
+            List<Llibre> llibres = repoll.findAll();
             model.addAttribute("llibres", llibres);
             return "consulta";            
         }
@@ -111,13 +114,13 @@ public class BookController {
                           @RequestParam(name = "idLlibre", required = false) String idLlibre, 
                           Model model) {
         
-        int idLlib = 0;
+        Long idLlib = null;
         String message = "";
         boolean llibreErr = false;
 
         try {
-            idLlib = Integer.parseInt(idLlibre);
-            Llibre llibre = repoll.getLlibreID(idLlib);
+            idLlib = Long.parseLong(idLlibre);
+            Optional<Llibre> llibre = repoll.findById(idLlib);
             if(llibre !=null) {
                 model.addAttribute("llibre", llibre);
             } else {

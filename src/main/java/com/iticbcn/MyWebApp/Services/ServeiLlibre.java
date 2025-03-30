@@ -1,19 +1,24 @@
 package com.iticbcn.MyWebApp.Services;
 
 import java.util.Optional;
+import java.util.List;
+import java.util.Set;
 
 import com.iticbcn.MyWebApp.Model.Llibre;
-import com.iticbcn.MyWebApp.Repositories.RepoLlibre;
 
-public class ServeiLlibre {
+public interface ServeiLlibre {
 
-    private final RepoLlibre repoLlibre;
+    List<Llibre> findAll();
     
-    public ServeiLlibre(RepoLlibre repoLlibre){
-        this.repoLlibre = repoLlibre;
-    }
+    Optional<Llibre> findById(Long id);
+    
+    Optional<Llibre> findByTitol(String titol);
+    
+    Set<Llibre> findByTitolAndEditorial(String titol, String editorial);
+    
+    Llibre save(Llibre llibre);
+    
+    void deleteById(Long id);
 
-    public Optional<Llibre> findByIdLlibre(int id_Llibre) {
-        return repoLlibre.findById(id_Llibre);
-    }
+    boolean validarISBN(String isbn);
 }
