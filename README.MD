@@ -19,7 +19,8 @@ Optional<> es una API de la classe Java que em utilitzat per a crear un safeguar
 S'usa el servei per a permetre un ús de les interfícies, mantenir l'arquitectura més estable i neta, i millorar la testabilitat del codi i el seu funcionament. 
 
 ## Documentació de les proves fetes. 
-![alt text](image.png)
+![test fet durant la execució inicial del programa, i comprovació que es presenta la pantalla inicial](image.png)
+
 
 
 
