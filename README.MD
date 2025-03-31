@@ -19,10 +19,27 @@ Optional<> es una API de la classe Java que em utilitzat per a crear un safeguar
 S'usa el servei per a permetre un ús de les interfícies, mantenir l'arquitectura més estable i neta, i millorar la testabilitat del codi i el seu funcionament. 
 
 ## Documentació de les proves fetes. 
-![test fet durant la execució inicial del programa, i comprovació que es presenta la pantalla inicial](image.png)
+1. Test fet durant la execució inicial del programa, i comprovació que es presenta la pantalla inicial. S'ha creat i comprovat que l'execució no es possible si no s'introdueix el usuari/contrasenya. 
 
+![test text](image.png)
 
+2. Execució de la segona pantalla correcte, i el usuari es transeferix correctament entre elles. Els tres link/possibles accions son accessibles. 
 
+![alt text](image-1.png)
+
+3. Els llibres previament creats estan guardats a la BBDD i es mostren correctament a la taula de continguts. El link per a anar a la pantalla anterior també funciona correctament. 
+
+![alt text](image-2.png)
+
+4. La pantalla de creació es mostra correctament, i el llibre afegit es desa correctament a la BBDD. La llibreria també mostra que el llibre s'ha desat correctament enviant a l'usuari a la taula de registres. S'ha comprovat que en cas que un dels camps no s'ha emplenat correctament, la pantalla emet un missatge d'error. 
+
+![alt text](image-3.png)
+![alt text](image-4.png)
+
+5. La búsqueda per id funciona correctament, i el llibre cercat (en aquesta ocasió el llibre que s'ha desat previament) es mostra correctament. 
+
+![alt text](image-5.png)
+![alt text](image-6.png)
 
 
 
