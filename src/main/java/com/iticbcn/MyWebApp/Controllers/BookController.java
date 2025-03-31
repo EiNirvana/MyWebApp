@@ -17,13 +17,13 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.iticbcn.MyWebApp.Model.Llibre;
 import com.iticbcn.MyWebApp.Model.Usuaris;
-import com.iticbcn.MyWebApp.Repositories.RepoLlibre;
+import com.iticbcn.MyWebApp.Services.ServeiLlibre;
 @Controller
 @SessionAttributes("users")
-public class BookController {
+public class BookController{
 
     @Autowired
-    RepoLlibre repoll;
+    ServeiLlibre serveillibre;
 
     @GetMapping("/")
     public String iniciar(Model model) {
@@ -53,7 +53,7 @@ public class BookController {
     @GetMapping("/consulta") 
     public String consulta(@ModelAttribute("users") Usuaris users,Model model) {
 
-        List<Llibre> llibres = repoll.findAll();
+        ArrayList<Llibre> llibres = serveillibre.findAll();
 
         model.addAttribute("llibres", llibres);
         
@@ -80,7 +80,6 @@ public class BookController {
 
     @PostMapping("/inserir")
     public String inserir(@ModelAttribute("users") Usuaris users, 
-                          @RequestParam(name = "idLlibre") String idLlibre,
                           @RequestParam(name = "titol") String titol,  
                           @RequestParam(name = "autor") String autor,
                           @RequestParam(name = "editorial") String editorial,  
@@ -89,23 +88,22 @@ public class BookController {
                           @RequestParam(name = "ISBN") String ISBN,
                           Model model) {
 
-        String message = "";
-        boolean llibreErr = false;
+            Llibre llibre = new Llibre();
+            llibre.setTitol(titol);
+            llibre.setAutor(autor);
+            llibre.setEditorial(editorial);
+            llibre.setDatapublicacio(datapublicacio);
+            llibre.setTematica(tematica);
+            llibre.setISBN(ISBN);
 
-        if (idLlibre == null || !idLlibre.matches("\\d+")) {
-            message = "La id de llibre ha de ser un nombre enter";
-            llibreErr = true;
-            model.addAttribute("message", message);
-            model.addAttribute("llibreErr", llibreErr);
-            return "inserir";
-        } else {
-            int idL = Integer.parseInt(idLlibre);
-            Llibre llibre = new Llibre(idL,titol,autor,editorial,datapublicacio,tematica, ISBN);
-            repoll.save(llibre);
-            List<Llibre> llibres = repoll.findAll();
+            serveillibre.save(llibre);
+            ArrayList<Llibre> llibres = serveillibre.findAll();
             model.addAttribute("llibres", llibres);
-            return "consulta";            
-        }
+            return "consulta";
+
+
+
+       
 
     }
 
@@ -120,7 +118,7 @@ public class BookController {
 
         try {
             idLlib = Long.parseLong(idLlibre);
-            Optional<Llibre> llibre = repoll.findById(idLlib);
+            Optional<Llibre> llibre = serveillibre.findById(idLlib);
             if(llibre !=null) {
                 model.addAttribute("llibre", llibre);
             } else {

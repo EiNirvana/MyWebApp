@@ -20,14 +20,14 @@ import lombok.NoArgsConstructor;
 public class Llibre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_Llibre;
-    @Column
+    private Long id_Llibre;
+    @Column(unique=true ,nullable = false)
     private String titol;
-    @Column
+    @Column(nullable=false)
     private String autor;
     @Column
     private String editorial;
-    @Column(name = "datapublicacio", columnDefinition = "DATE")
+    @Column(nullable=false)
     private LocalDate datapublicacio;
     @Column
     private String tematica;

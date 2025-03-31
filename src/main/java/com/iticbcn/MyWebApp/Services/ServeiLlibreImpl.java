@@ -2,32 +2,25 @@ package com.iticbcn.MyWebApp.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import com.iticbcn.MyWebApp.Model.Llibre;
-import java.util.Set;
 import com.iticbcn.MyWebApp.Repositories.RepoLlibre;
 import org.springframework.stereotype.Service;
 
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+@Service
 public class ServeiLlibreImpl implements ServeiLlibre {
 
-    private final RepoLlibre repoLlibre;
-
-    public ServeiLlibreImpl(RepoLlibre repoLlibre){
-        this.repoLlibre = repoLlibre;
-    }
+    @Autowired
+    private RepoLlibre repoLlibre;
 
     @Override
-    public List<Llibre> findAll() {
+    public ArrayList<Llibre> findAll() {
         return repoLlibre.findAll();
     }
 
-    @Override
-    public Optional<Llibre> findByIdLlibre(Long id) {
-        return repoLlibre.findById(id);
-    }
 
     @Override
     public Optional<Llibre> findByTitol(String titol) {
@@ -35,7 +28,7 @@ public class ServeiLlibreImpl implements ServeiLlibre {
     }
 
     @Override
-    public Set<Llibre> findByTitolAndEditorial(String titol, String editorial) {
+    public Llibre findByTitolAndEditorial(String titol, String editorial) {
         return repoLlibre.findByTitolAndEditorial(titol, editorial);
     }
 
@@ -57,5 +50,9 @@ public class ServeiLlibreImpl implements ServeiLlibre {
         String regex = "^(97(8|9))?\\d{9}(\\d|X)$";
         return Pattern.matches(regex, isbn);
     }
+
+    @Override
+    public Optional<Llibre> findById(Long id) {
+        return repoLlibre.findById(id);    }
     
 }
